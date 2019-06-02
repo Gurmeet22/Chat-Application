@@ -36,18 +36,20 @@ $location.addEventListener('click', () => {
     })
 })
 
-socket.on('message', (message) => {
-    console.log(message)
+socket.on('message', ({text, createdAt}) => {
+    console.log(text, createdAt)
     const html = Mustache.render(messageTemplate, {
-        message
+        message: text,
+        createdAt: moment(createdAt).format('h:mm A')
     })
     $messages.insertAdjacentHTML('beforeend', html)
 })
 
-socket.on('location', (url) => {
-    console.log(url)
+socket.on('location', ({url, createdAt}) => {
+    console.log(url, createdAt)
     const html = Mustache.render(locationTemplate, {
-        url
+        url,
+        createdAt: moment(createdAt).format('h:mm A')
     })
     $messages.insertAdjacentHTML('beforeend', html)
 })

@@ -13,11 +13,11 @@
         <button id="location">Send my location</button>
 
         <script id="message-template" type="text/html">
-            <p>{{ message }}</p>
+            <p>{{ createdAt }} - {{ message }}</p>
         </script>
 
         <script id="location-template" type="text/html">
-            <p><a href="{{url}}" target="_blank">My location</a></p>
+            <p>{{ createdAt }} - <a href="{{url}}" target="_blank">My location</a></p>
         </script>
 
 
