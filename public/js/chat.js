@@ -1,55 +1,73 @@
 const socket = io()
-const $form = document.getElementById('myform')
-const $forminput = $form.querySelector('input')
-const $formsubmit = $form.querySelector('button')
-const $location = document.getElementById('location')
-const $messages = document.getElementById('messages')
-const messageTemplate = document.getElementById('message-template').innerHTML
-const locationTemplate = document.getElementById('location-template').innerHTML
 
+// Elements
+const $messageForm = document.querySelector('#message-form')
+const $messageFormInput = $messageForm.querySelector('input')
+const $messageFormButton = $messageForm.querySelector('button')
+const $sendLocationButton = document.querySelector('#send-location')
+const $messages = document.querySelector('#messages')
 
-$form.addEventListener('submit', (e) => {
+// Templates
+const messageTemplate = document.querySelector('#message-template').innerHTML
+const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
+
+// Options
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+socket.on('message', (message) => {
+    console.log(message)
+    const html = Mustache.render(messageTemplate, {
+        message: message.text,
+        createdAt: moment(message.createdAt).format('h:mm a')
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+})
+
+socket.on('locationMessage', (message) => {
+    console.log(message)
+    const html = Mustache.render(locationMessageTemplate, {
+        url: message.url,
+        createdAt: moment(message.createdAt).format('h:mm a')
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+})
+
+$messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    $formsubmit.setAttribute('disabled', 'disabled')
-    const msg = e.target.elements.message.value;
-    socket.emit('sendMessage', msg, (error) => {
-        $formsubmit.removeAttribute('disabled')
-        $forminput.value = ''
-        $forminput.focus()
-        if(error){
-            return console.log('bad words will not be permitted')
+
+    $messageFormButton.setAttribute('disabled', 'disabled')
+
+    const message = e.target.elements.message.value
+
+    socket.emit('sendMessage', message, (error) => {
+        $messageFormButton.removeAttribute('disabled')
+        $messageFormInput.value = ''
+        $messageFormInput.focus()
+
+        if (error) {
+            return console.log(error)
         }
-        console.log('Message delivered')
+
+        console.log('Message delivered!')
     })
 })
 
-$location.addEventListener('click', () => {
-    $location.setAttribute('disabled', 'disabled')
-    if(!navigator.geolocation){
-        return alert('Your browser does not support this.')
+$sendLocationButton.addEventListener('click', () => {
+    if (!navigator.geolocation) {
+        return alert('Geolocation is not supported by your browser.')
     }
-    navigator.geolocation.getCurrentPosition(({coords}) => {
-        socket.emit('sendLocation', {latitude: coords.latitude, longitude: coords.longitude}, () => {
-            $location.removeAttribute('disabled')
-            console.log('Location shared')
+
+    $sendLocationButton.setAttribute('disabled', 'disabled')
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        socket.emit('sendLocation', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        }, () => {
+            $sendLocationButton.removeAttribute('disabled')
+            console.log('Location shared!')  
         })
     })
 })
 
-socket.on('message', ({text, createdAt}) => {
-    console.log(text, createdAt)
-    const html = Mustache.render(messageTemplate, {
-        message: text,
-        createdAt: moment(createdAt).format('h:mm A')
-    })
-    $messages.insertAdjacentHTML('beforeend', html)
-})
-
-socket.on('location', ({url, createdAt}) => {
-    console.log(url, createdAt)
-    const html = Mustache.render(locationTemplate, {
-        url,
-        createdAt: moment(createdAt).format('h:mm A')
-    })
-    $messages.insertAdjacentHTML('beforeend', html)
-})
+socket.emit('join', { username, room })
