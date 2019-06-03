@@ -7,9 +7,11 @@ const $messageFormButton = $messageForm.querySelector('button')
 const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
 
+
 // Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -28,6 +30,8 @@ const autoscroll = () => {
         $messages.scrollTop = $messages.scrollHeight
     }
 }
+
+
 
 socket.on('message', (message) => {
     console.log(message)
@@ -101,5 +105,6 @@ socket.on('users', ({users, room}) => {
         room,
         users
     })
-    document.getElementById('sidebar').innerHTML = html
+    document.getElementById('sidebar').insertAdjacentHTML('beforeend', html)
 })
+

@@ -15,6 +15,7 @@ input {
 }
 
 body {
+    
     line-height: 1.4;
     color: #333333;
     font-family: Helvetica, Arial, sans-serif;
@@ -59,7 +60,7 @@ button:disabled {
 /* Join Page Styles */
 
 .centered-form {
-    background: #333744;
+    background-image:url('/img/back.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:cover;
     width: 100vw;
     height: 100vh;   
     display: flex;
@@ -169,6 +170,7 @@ button:disabled {
     font-size: 22px;
     background: #2c2f3a;
     padding: 24px;   
+    line-height: 1.6
 }
 
 .list-title {
