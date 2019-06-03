@@ -9,14 +9,30 @@ const $messages = document.querySelector('#messages')
 
 // Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
-const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
+const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
+const autoscroll = () => {
+    const $lastMessage = $messages.lastElementChild
+
+    const newMessageStyles = getComputedStyle($lastMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $lastMessage.offsetHeight + newMessageMargin
+    const visibleHeight = $messages.offsetHeight
+    const containerHeigt = $messages.scrollHeight
+    const scrolloffset = $messages.scrollTop + visibleHeight
+
+    if(containerHeigt - newMessageHeight <= scrolloffset){
+        $messages.scrollTop = $messages.scrollHeight
+    }
+}
+
 socket.on('message', (message) => {
     console.log(message)
     const html = Mustache.render(messageTemplate, {
+        username: message.username,
         message: message.text,
         createdAt: moment(message.createdAt).format('h:mm a')
     })
@@ -26,6 +42,7 @@ socket.on('message', (message) => {
 socket.on('locationMessage', (message) => {
     console.log(message)
     const html = Mustache.render(locationMessageTemplate, {
+        username: message.username,
         url: message.url,
         createdAt: moment(message.createdAt).format('h:mm a')
     })
@@ -49,6 +66,7 @@ $messageForm.addEventListener('submit', (e) => {
         }
 
         console.log('Message delivered!')
+        autoscroll()
     })
 })
 
@@ -66,6 +84,7 @@ $sendLocationButton.addEventListener('click', () => {
         }, () => {
             $sendLocationButton.removeAttribute('disabled')
             console.log('Location shared!')  
+            autoscroll()
         })
     })
 })
@@ -75,4 +94,12 @@ socket.emit('join', { username, room }, (error) => {
         alert(error)
         location.href = '/'
     }
+})
+
+socket.on('users', ({users, room}) => {
+    const html = Mustache.render(sidebarTemplate, {
+        room,
+        users
+    })
+    document.getElementById('sidebar').innerHTML = html
 })
