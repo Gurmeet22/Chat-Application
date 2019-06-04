@@ -73,14 +73,19 @@ button:disabled {
     background: #F7F7FA;
     padding: 24px;
     width: 350px;
-    height: 350px
+    height: 400px
 }
 
 .centered-form button {
+    margin-top: 5%;
     width: 100%;
 }
 
 .centered-form input {
+    margin-bottom: 16px;
+    width: 100%;
+}
+.centered-form select {
     margin-bottom: 16px;
     width: 100%;
 }

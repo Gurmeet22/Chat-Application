@@ -1,10 +1,12 @@
 const path = require('path')
 const http = require('http')
 const express = require('express')
+const hbs = require('hbs')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
+const { addRoom, getRooms } = require('./utils/rooms')
 
 const app = express()
 const server = http.createServer(app)
@@ -12,15 +14,24 @@ const io = socketio(server)
 
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates/views')
 
 app.use(express.static(publicDirectoryPath))
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
+
+app.get('', (req, res) => {
+    res.render('index', {
+        rooms: getRooms()
+    })
+})
 
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
     socket.on('join', (options, callback) => {
         const { error, user } = addUser({ id: socket.id, ...options })
-
+        addRoom(options.room)
         if (error) {
             return callback(error)
         }

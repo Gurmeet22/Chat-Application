@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="icon" href="/img/favicon.png">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+        <div class="centered-form">
+            <div class="centered-form__box">
+                <h1 style="text-align: center">Join</h1>
+                <form action="/chat.html">
+                    <label>Display name</label>
+                    <input type="text" name="username" placeholder="Display name" required>
+                    <label>Room</label>
+                    <input type="text" id="room" name="room" placeholder="Room">
+                    <label>Or Join an Existing Room</label>
+                    <select id="roomName" name="room1" onchange="myfunc()">
+                        {{#if rooms}}
+                            <option value="None">None</option>
+                            {{#each rooms}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            
+                        {{else}}
+                            <option value="No Rooms active at the moment">No Rooms active at the moment</option>
+                        {{/if}}
+                    </select>
+                    <button>Join</button>
+                </form>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function myfunc(){
+                var roooms = document.getElementById('roomName')
+                var rooom = roooms.value
+                console.log(rooom)
+                
+                if(rooom != 'None'){
+                    console.log('pasdasdada')
+                    document.getElementById('room').setAttribute('disabled', 'disabled')
+                    
+                } else {
+                    console.log('asdasdada')
+                    document.getElementById('room').removeAttribute('disabled')
+                    
+                }
+                
+            }
+        </script>
+    </body>
+</html>
