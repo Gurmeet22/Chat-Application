@@ -108,6 +108,6 @@ socket.on('users', ({users, room}) => {
         room,
         users
     })
-    document.getElementById('sidebar').insertAdjacentHTML('beforeend', html)
+    document.getElementById('sidebar').innerHTML = html
 })
 
