@@ -8,6 +8,7 @@ const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 const { addRoom, getRooms } = require('./utils/rooms')
 
+
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
@@ -15,10 +16,12 @@ const io = socketio(server)
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
+const partialsPath = path.join(__dirname, '../templates/partials')
 
 app.use(express.static(publicDirectoryPath))
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
+hbs.registerPartials(partialsPath)
 
 app.get('', (req, res) => {
     res.render('index', {

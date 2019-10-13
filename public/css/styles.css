@@ -192,3 +192,14 @@ button:disabled {
     font-weight: 300;
     padding: 12px 24px 0 24px;
 }
+
+footer {
+    color: #ffffff;
+    border-top: 1px solid #eeeeee;
+    margin-top: 16px;
+    padding: 16px 0;
+    position: fixed;
+    bottom: 0;
+    width: 34%;
+    left: 650px;
+}
