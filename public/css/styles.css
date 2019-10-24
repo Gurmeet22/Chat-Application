@@ -15,7 +15,6 @@ input {
 }
 
 body {
-    
     line-height: 1.4;
     color: #333333;
     font-family: Helvetica, Arial, sans-serif;
@@ -56,25 +55,28 @@ button:disabled {
     cursor: default;
     background: #7c5cbf94;
 }
-a{
+
+a {
     cursor: pointer;
     color: #7C5CBF;
     text-decoration: none;
 }
-a:hover{
+
+a:hover {
     color: #6b47b8;
 }
+
 
 /* Join Page Styles */
 
 .centered-form {
     /* background-image:url('/img/back.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:cover;
      */
-     background-color: #923cb5;
-     background-image: linear-gradient(147deg, #923cb5 0%, #000000 74%);
+    background-color: #923cb5;
+    background-image: linear-gradient(147deg, #923cb5 0%, #000000 74%);
     /* background: rgb(65, 64, 64); */
     width: 100vw;
-    height: 100vh;   
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,13 +85,14 @@ a:hover{
 .centered-form__box {
     box-shadow: 0px 0px 17px 1px #1D1F26;
     background: #F7F7FA;
-    padding: 24px;
-    width: 380px;
-    height: 480px
+    padding: 1%;
+    width: 20%;
+    height: 50%;
+    font-size: 1.0rem;
 }
 
 .centered-form button {
-    margin-top: 5%;
+    margin-top: 5px;
     width: 100%;
 }
 
@@ -97,10 +100,35 @@ a:hover{
     margin-bottom: 16px;
     width: 100%;
 }
+
 .centered-form select {
     margin-bottom: 16px;
     width: 100%;
-    font-size: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .centered-form__box {
+        box-shadow: 0px 0px 17px 1px #1D1F26;
+        background: #F7F7FA;
+        padding: 1%;
+        width: 350px;
+        height: 500px;
+        font-size: 1.0rem;
+    }
+    footer {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+    .centered-form__box {
+        box-shadow: 0px 0px 17px 1px #1D1F26;
+        background: #F7F7FA;
+        padding: 1%;
+        width: 45%;
+        height: 45%;
+        font-size: 1.0rem;
+    }
 }
 
 
@@ -119,6 +147,28 @@ a:hover{
     text-align: center
 }
 
+#leave-room-also {
+    width: 40px;
+    margin: 5px;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+    background: none;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .chat__sidebar {
+        width: 0px;
+    }
+    #leave-room-also {
+        color: #7C5CBF;
+        font-size: 20px;
+    }
+}
+
+
 /* Chat styles */
 
 .chat__main {
@@ -134,10 +184,11 @@ a:hover{
     overflow-y: scroll;
 }
 
+
 /* Message Styles */
 
 .message {
-    margin-bottom: 16px;   
+    margin-bottom: 16px;
 }
 
 .message__name {
@@ -155,32 +206,44 @@ a:hover{
     color: #6b47b8;
 }
 
+
 /* Message Composition Styles */
 
 .compose {
     display: flex;
     flex-shrink: 0;
     margin-top: 16px;
-    padding: 24px;
+    padding: 5px;
 }
 
 .compose form {
     display: flex;
     flex-grow: 1;
-    margin-right: 16px;
+    margin-right: 0px;
 }
 
 .compose input {
     border: 1px solid #eeeeee;
     width: 100%;
-    padding: 12px;
-    margin: 0 16px 0 0;
+    padding: 6px;
+    margin: 0 0 0 0;
     flex-grow: 1;
 }
 
 .compose button {
-    font-size: 14px;
+    font-size: 34px;
+    display: flex;
+    flex-shrink: 1;
+    background: none;
+    color: #7C5CBF;
 }
+
+@media screen and (max-width: 768px) {
+    .compose button {
+        font-size: 20px;
+    }
+}
+
 
 /* Chat Sidebar Styles */
 
@@ -188,8 +251,12 @@ a:hover{
     font-weight: 400;
     font-size: 22px;
     background: #2c2f3a;
-    padding: 24px;   
+    padding: 24px;
     line-height: 1.6
+}
+
+.room-title button {
+    margin: 5px;
 }
 
 .list-title {
@@ -206,12 +273,11 @@ a:hover{
 }
 
 footer {
-    color: #ffffff;
+    color: #888888;
     border-top: 1px solid #eeeeee;
-    margin-top: 16px;
-    padding: 16px 0;
+    margin-top: 1%;
+    padding: 1% 0;
     position: fixed;
     bottom: 0;
     width: 34%;
-    left: 650px;
 }
