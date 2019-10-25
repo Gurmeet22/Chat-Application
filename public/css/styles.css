@@ -85,15 +85,17 @@ a:hover {
 .centered-form__box {
     box-shadow: 0px 0px 17px 1px #1D1F26;
     background: #F7F7FA;
-    padding: 1%;
-    width: 20%;
-    height: 50%;
+    padding: 8px;
+    width: 400px;
+    height: 500px;
     font-size: 1.0rem;
 }
 
 .centered-form button {
-    margin-top: 5px;
-    width: 100%;
+    position: relative;
+    left: 25%;
+    margin-top: 15px;
+    width: 50%;
 }
 
 .centered-form input {
@@ -277,7 +279,7 @@ footer {
     border-top: 1px solid #eeeeee;
     margin-top: 1%;
     padding: 1% 0;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 34%;
 }
