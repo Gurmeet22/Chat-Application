@@ -118,7 +118,7 @@ a:hover {
         font-size: 1.0rem;
     }
     footer {
-        margin-top: 20px;
+        display: none;
     }
 }
 
